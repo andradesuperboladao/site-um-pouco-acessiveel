@@ -4,7 +4,7 @@ let corpo = document.getElementById('corpo');
 let cabecalho = document.getElementById('header');
 let letras = document.querySelectorAll('p');
 let botoes = document.querySelectorAll('button');
-let botaomodocego = botoes[0];
+let botaoc2 = botoes[0];
 let btcor = botoes[1];
 let btdiminuir = botoes[2];
 let btaumentar = botoes[3];
@@ -18,6 +18,8 @@ let tema = localStorage.getItem('bodyStyle');
 let imgs = document.querySelectorAll('img');
 let ultimaTecla = null; 
 let modoCegoAtivo = false; 
+let tamNovo = parseFloat(window.getComputedStyle(document.body).fontSize);
+tamNovo = tamNovo + 'px';
 
 /* Funções */
 document.addEventListener('keydown', (event) => {
@@ -36,9 +38,10 @@ function cego() {
     return;
   }
   modoCegoAtivo = true; 
+  localStorage.setItem('Booleano',JSON.stringify(true));
   window.speechSynthesis.cancel();
   let fala = new SpeechSynthesisUtterance('modo para deficiente visual ativado');
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
   focuss();
 }
@@ -69,49 +72,50 @@ function focusImage(event) {
   window.speechSynthesis.cancel();
   let alte = event.target.alt;
   let fala = new SpeechSynthesisUtterance(alte);
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
 function focusLink(event) {
   window.speechSynthesis.cancel();
   let linquee = event.target.textContent;
   let fala = new SpeechSynthesisUtterance(linquee);
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
 function focusTitulo() {
   window.speechSynthesis.cancel();
   let tituloContext = titulo.textContent;
   let fala = new SpeechSynthesisUtterance(tituloContext);
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
 function focusTitulo2(event) {
   window.speechSynthesis.cancel();
   let tituloContext = event.target.textContent;
   let fala = new SpeechSynthesisUtterance(tituloContext);
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
 function focusLetra(event) {
   window.speechSynthesis.cancel();
   let lletras = event.target.textContent;
   let fala = new SpeechSynthesisUtterance(lletras);
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
 function focusLista(event) {
   window.speechSynthesis.cancel();
   let llisto = event.target.textContent;
   let fala = new SpeechSynthesisUtterance(llisto);
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
 function desativarModoCego() {
-  modoCegoAtivo = false; 
+  modoCegoAtivo = false;
+  localStorage.setItem('Booleano',JSON.stringify(false));
   window.speechSynthesis.cancel();
   let fala = new SpeechSynthesisUtterance('modo para deficiente visual desativado');
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
   imgs.forEach((image) => {
     image.removeEventListener('focus', focusImage);
@@ -139,6 +143,14 @@ window.onload = () => {
   if (localStorage.getItem('bodyStyle')) {
     corpo.classList.add(localStorage.getItem('bodyStyle'));
   }
+  if (localStorage.getItem('txtTam')){
+    corpo.style.fontSize = localStorage.getItem('txtTam');
+  }
+  if (localStorage.getItem('Booleano') === 'false'){
+    desativarModoCego();
+  } else {
+    cego();
+  }
 }
 
 function estilizacaoCego() {
@@ -147,10 +159,10 @@ function estilizacaoCego() {
   modau.style.display = 'none';
 }
 
-botaomodocego.addEventListener('focus', () => {
+botaoc2.addEventListener('focus', () => {
   window.speechSynthesis.cancel();
   let fala = new SpeechSynthesisUtterance('clique para ativar o modo deficiente visual, ou use o atalho, Alt + S no teclado');
-  fala.rate = 1.7;
+  fala.rate = 1.3;
   speechSynthesis.speak(fala);
 });
 
@@ -161,10 +173,10 @@ function aumentar() {
   let tamanho = window
     .getComputedStyle(corpo, null)
     .getPropertyValue('font-size');
-  tamanho += 'px';
   if (tamanho < 40 + 'px') {
     let tamanhonov = parseFloat(tamanho) + 2 + 'px';
     corpo.style.fontSize = tamanhonov;
+    localStorage.setItem('txtTam', tamanhonov)
   }
 }
 
@@ -177,6 +189,7 @@ function diminuir() {
   if (titulotam > 20 + 'px') {
     let titulonovo = parseFloat(titulotam) - 2 + 'px';
     corpo.style.fontSize = titulonovo;
+    localStorage.setItem('txtTam', titulonovo)
   }
 }
 

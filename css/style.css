@@ -1,0 +1,75 @@
+*{
+    margin: 0px;
+}
+#header{
+    margin-top: 0px ;
+    width: 100%;
+    height: 100px;
+    background-color: #E3F2FD;
+    z-index: 1;
+}
+h1{
+    color: #0D47A1;
+}
+.texto{
+    margin-top: 5%;
+    margin-left: 10%;
+}
+#fade{
+    position: fixed; /* ou absolute, dependendo do layout */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Exemplo de fundo semitransparente */
+}
+#modal{
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: aqua;
+    max-width: 90%;
+    border-radius: 5px;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+     height: 25%;
+}
+.medcabe{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.medcabe button{
+    height: 10%;
+    width: 10%;
+    opacity: 100%;
+    margin-left: 20px;
+
+}
+.btn_nav{
+    border-radius: 100%;
+    border: none;
+    margin: 0px 3px 0px 3px;
+}
+.container-fluid{
+    justify-content: space-between
+}
+
+.dark-mode {
+    background-color: #262626; 
+    color: #FFFFFF;
+}
+
+.ligth-mode {
+    background-color: #FFFFFF; 
+    color: black;
+}
+.xd{
+    width: 60%;
+    height: 60%;
+    margin-left: 15%;
+   
+}

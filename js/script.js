@@ -42,6 +42,7 @@ function cego() {
   modoCegoAtivo = true; 
   localStorage.setItem('Booleano',JSON.stringify(true));
   if(fala == false){
+  
   let fala = new SpeechSynthesisUtterance('modo para deficiente visual ativado');
   fala.rate = 1.3;
   speechSynthesis.speak(fala);

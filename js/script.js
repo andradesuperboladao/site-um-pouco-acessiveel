@@ -1,10 +1,11 @@
+/* Variaveis */
 let titulo = document.querySelector('h1');
 let titulo2 = document.querySelectorAll('h2');
 let corpo = document.getElementById('corpo');
 let cabecalho = document.getElementById('header');
 let letras = document.querySelectorAll('p');
 let botoes = document.querySelectorAll('button');
-let botaoc2 = botoes[0];
+let botaomodoleitor = botoes[0];
 let btcor = botoes[1];
 let btdiminuir = botoes[2];
 let btaumentar = botoes[3];
@@ -19,9 +20,11 @@ let imgs = document.querySelectorAll('img');
 let ultimaTecla = null; 
 let modoCegoAtivo = false; 
 let tamNovo = parseFloat(window.getComputedStyle(document.body).fontSize);
+let fala = false
 tamNovo = tamNovo + 'px';
 
 /* Funções */
+/* Ativa/desativa modo leitor pro meio do atalho alt+s */
 document.addEventListener('keydown', (event) => {
   if (ultimaTecla === 'Alt' && event.key === 's') {
     cego(); 
@@ -31,7 +34,6 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', () => {
   ultimaTecla = null; 
 });
-
 function cego() {
   if (modoCegoAtivo) {
     desativarModoCego();
@@ -39,10 +41,12 @@ function cego() {
   }
   modoCegoAtivo = true; 
   localStorage.setItem('Booleano',JSON.stringify(true));
-  window.speechSynthesis.cancel();
+  if(fala == false){
   let fala = new SpeechSynthesisUtterance('modo para deficiente visual ativado');
   fala.rate = 1.3;
   speechSynthesis.speak(fala);
+  fala = true;
+  }
   focuss();
 }
 function focuss() {
@@ -110,6 +114,7 @@ function focusLista(event) {
   fala.rate = 1.3;
   speechSynthesis.speak(fala);
 }
+/* Anuncia e remove as propriedades usadas no modo leitor */
 function desativarModoCego() {
   modoCegoAtivo = false;
   localStorage.setItem('Booleano',JSON.stringify(false));
@@ -152,14 +157,7 @@ window.onload = () => {
     cego();
   }
 }
-
-function estilizacaoCego() {
-  fadi.style.opacity = '0';
-  nav.style.opacity = '100';
-  modau.style.display = 'none';
-}
-
-botaoc2.addEventListener('focus', () => {
+botaomodoleitor.addEventListener('focus', () => {
   window.speechSynthesis.cancel();
   let fala = new SpeechSynthesisUtterance('clique para ativar o modo deficiente visual, ou use o atalho, Alt + S no teclado');
   fala.rate = 1.3;
@@ -167,7 +165,6 @@ botaoc2.addEventListener('focus', () => {
 });
 
 /* Mudar tamanho das letras */
-
 function aumentar() {
   window.speechSynthesis.cancel();
   let tamanho = window
@@ -178,21 +175,20 @@ function aumentar() {
     corpo.style.fontSize = tamanhonov;
     localStorage.setItem('txtTam', tamanhonov)
   }
-}
-
+};
 function diminuir() {
   window.speechSynthesis.cancel();
   let titulotam = window
     .getComputedStyle(corpo, null)
-    .getPropertyValue('font-size');
+    .getPropertyValue('font-size')
   titulotam += 'px';
   if (titulotam > 20 + 'px') {
     let titulonovo = parseFloat(titulotam) - 2 + 'px';
     corpo.style.fontSize = titulonovo;
     localStorage.setItem('txtTam', titulonovo)
   }
-}
-
+};
+/* Modo claro/Modo escuro */
 function mudarcor() {
   if (!corpo.className || corpo.classList.contains('ligth-mode')) {
     corpo.classList.remove('ligth-mode');
